@@ -86,6 +86,3 @@ volumes:
         device: ${BUILD_PATH}wp
         o: bind
         type: none
-    
-    
-    
