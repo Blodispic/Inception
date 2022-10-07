@@ -1,3 +1,4 @@
+version: '3'
 services:
   nginx:
     depends_on:
@@ -12,7 +13,7 @@ services:
     networks:
     - 42network
     volumes:
-    - wp_volume:/var/www/html/wp
+    - wp_volume:/var/www/html/wordpress
 
   wordpress:
     depends_on:
@@ -23,13 +24,13 @@ services:
     init: true
     build:
       context: requirements/wordpress/.
-      args:
+    environment:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_RACINE=${DB_RACINE}
       - DB_RPASS=${DB_RPASS}
-    environment:
+      - DB_HOST=${DB_HOST}
       - WP_ADMIN=${WP_ADMIN}
       - WP_APASS=${WP_APASS}
       - WP_AMAIL=${WP_AMAIL}
@@ -43,7 +44,7 @@ services:
     networks:
     - 42network
     volumes:
-    - wp_volume:/var/www/html/wp
+    - wp_volume:/var/www/html/wordpress
 
   mariadb:
     restart: always
@@ -63,10 +64,12 @@ services:
     networks:
     - 42network
     volumes:
-    - wp_volume:/var/www/html/db
+    - db_volume:/var/lib/mysql
 
 networks:
   42network:
+      name: 42network
+      driver: bridge
 
 volumes:
   db_volume:
