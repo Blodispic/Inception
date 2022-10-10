@@ -2,7 +2,7 @@ server {
 	listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
 
-	server_name rozhou.42.fr;
+	server_name '127.0.0.1 rozhou.42.fr';
 	root /var/www/html/wordpress;
 	index index.php index.html index.htm index.nginx-debian.html;
 
