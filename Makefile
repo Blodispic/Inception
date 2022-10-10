@@ -1,13 +1,8 @@
-VM_PATH	=	/Users/rozhou/poubelle/
+BUILD_PATH	=	/home/rozhou/
 
 all:
-	mkdir -p $(VM_PATH)db
-	mkdir -p $(VM_PATH)wp
-	docker-compose -f srcs/docker-compose.yml up -d
-
-build:
-	mkdir -p $(VM_PATH)db
-	mkdir -p $(VM_PATH)wp
+	mkdir -p $(BUILD_PATH)db
+	mkdir -p $(BUILD_PATH)wp
 	docker-compose -f srcs/docker-compose.yml up -d --build
 
 stop:
@@ -18,16 +13,8 @@ clean:
 
 fclean:
 	docker-compose -f srcs/docker-compose.yml down --rmi all -v
-	rm -rf $(VM_PATH)
+	rm -rf $(BUILD_PATH)
 
-free:
-	docker-compose -f srcs/docker-compose.yml down --rmi all -v
-	rm -rf $(VM_PATH)
-	docker system prune -a
-
-re: stop build
-
-reset:
-	"docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q)"
+re: stop all
 
 .PHONY: fclean all clean free stop build re reset
